@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package sudokusolver;
 import javax.swing.*;
 import java.awt.*;
@@ -10,11 +6,8 @@ import java.awt.event.*;
  *
  * @author Atul Gupta
  */
-public class SudokuSolver extends JFrame{
-
-    /**
-     * @param args the command line arguments
-     */
+public class SudokuSolver extends JFrame
+{
      private static final int SIZE = 9;
     private JTextField[][] cells = new JTextField[SIZE][SIZE];
     private JButton solveButton;
@@ -29,7 +22,7 @@ public class SudokuSolver extends JFrame{
 
         JPanel gridPanel = new JPanel(new GridLayout(SIZE, SIZE));
 
-        // Create 9x9 input grid
+        // Creating 9x9 input grid
         for (int row = 0; row < SIZE; row++) {
             for (int col = 0; col < SIZE; col++) {
                 JTextField cell = new JTextField();
@@ -56,13 +49,13 @@ public class SudokuSolver extends JFrame{
         solveButton.setFont(new Font("SansSerif", Font.BOLD, 16));
         solveButton.addActionListener(e -> {
             getInputGrid();
-            if(Helper.solveSudoku(grid))
+            if(Helper.solveSudoku())
             {
                 displaySolvedGrid(grid);
                 JOptionPane.showMessageDialog(this, "Sudoku Solved Successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             }
-            
-            printGrid(grid); // Replace this with actual solver later
+            else
+                JOptionPane.showMessageDialog(this, "Sudoku can't be Solved!", "Error", JOptionPane.INFORMATION_MESSAGE);
         });
 
         add(solveButton, BorderLayout.SOUTH);
@@ -70,9 +63,9 @@ public class SudokuSolver extends JFrame{
         setVisible(true);
     }
 
-    // Extract values from the text fields into a 2D array
-    private int[][] getInputGrid() {
-        int[][] grid = new int[SIZE][SIZE];
+    // Extract values from the text fields into the grid[][]
+    private void getInputGrid() {
+        grid = new int[SIZE][SIZE];
         for (int row = 0; row < SIZE; row++) {
             for (int col = 0; col < SIZE; col++) {
                 String text = cells[row][col].getText().trim();
@@ -86,7 +79,6 @@ public class SudokuSolver extends JFrame{
                 }
             }
         }
-        return grid;
     }
     
     private void displaySolvedGrid(int[][] solvedGrid) {
@@ -98,18 +90,6 @@ public class SudokuSolver extends JFrame{
                     cells[row][col].setForeground(new Color(0, 102, 204)); // solved values in blue
                 }
             }
-        }
-    }
-
-
-    // For testing: print the grid to console
-    private void printGrid(int[][] grid) {
-        System.out.println("Sudoku Input:");
-        for (int[] row : grid) {
-            for (int val : row) {
-                System.out.print((val == 0 ? "." : val) + " ");
-            }
-            System.out.println();
         }
     }
 
